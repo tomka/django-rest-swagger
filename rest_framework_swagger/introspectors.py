@@ -1005,6 +1005,12 @@ class YAMLDocstringParser(object):
             pass
         return None
 
+    def get_response_models(self):
+        """
+        Docstring may define custom response models
+        """
+        return self.object.get('models', None)
+
     def get_response_type(self):
         """
         Docstring may define custom response class
