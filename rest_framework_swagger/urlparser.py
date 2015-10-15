@@ -78,7 +78,7 @@ class UrlParser(object):
         filtered_paths = set()
         base_path = self.__get_base_path__(root_paths)
         for path in root_paths:
-            resource = path.replace(base_path, '').split('/')[0]
+            resource = path.replace(base_path, '')
             filtered_paths.add(base_path + resource)
 
         return list(filtered_paths)
@@ -108,11 +108,11 @@ class UrlParser(object):
 
         path = simplify_regex(prefix + pattern.regex.pattern)
 
+        path = path.replace('<', '{').replace('>', '}')
+
         if filter_path is not None:
             if re.match('^/?%s(/.*)?$' % re.escape(filter_path), path) is None:
                 return None
-
-        path = path.replace('<', '{').replace('>', '}')
 
         if self.__exclude_format_endpoints__(path):
             return
