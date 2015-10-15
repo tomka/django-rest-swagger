@@ -236,6 +236,9 @@ class DocumentationGenerator(object):
                     "properties": response_type
                 }
             })
+            response_models = doc_parser.get_response_models()
+            if response_models is not None:
+                self.explicit_response_types.update(response_models)
             return response_type_name
         else:
             serializer_name = IntrospectorHelper.get_serializer_name(serializer)
