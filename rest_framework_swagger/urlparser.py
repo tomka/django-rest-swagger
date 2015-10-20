@@ -75,10 +75,10 @@ class UrlParser(object):
         for path in api_paths:
             #  If a URLs /resource/ and /resource/{pk} exist, use the base
             #  as the resource. If there is no base resource URL, then include
-            path_base = path.split('/{')[0]
-            if path is not path_base and path_base in api_paths and len(path_base):
+            if path.startswith(tuple(root_paths)):
                 continue
-            root_paths.add(path_base)
+            root_paths = root_paths - set([p for p in root_paths if p.startswith(path)])
+            root_paths.add(path)
 
         top_level_apis = self.__filter_top_level_apis__(root_paths)
 
